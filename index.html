@@ -85,6 +85,16 @@
   .foto-row .opt{flex:1;justify-content:center}
   .foto-row .opt .chk{display:none}
 
+  /* tela de carregamento */
+  .loading{display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 0}
+  .spinner{width:76px;height:76px;position:relative}
+  .spinner .pulse{position:absolute;inset:0;border-radius:50%;background:var(--rosa-claro);animation:pulse 1.4s ease-in-out infinite}
+  .spinner .heart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;animation:beat 1.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(.55);opacity:.5}50%{transform:scale(1);opacity:.12}}
+  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+  .loading .msg{font-family:'Playfair Display',serif;font-size:20px;color:var(--grafite);text-align:center;min-height:26px}
+  .loading .sub{font-size:14px;color:var(--cinza)}
+
   /* tela final */
   .end-emoji{font-size:52px;margin-bottom:6px}
   .caminho{background:linear-gradient(160deg,var(--verde),#40614c);border-radius:22px;padding:24px 22px;color:#fff;margin:18px 0 10px;box-shadow:var(--sombra-sm)}
@@ -457,7 +467,7 @@ function progressInfo(){
 
 function render(){
   const q = currentQ();
-  if(!q){ renderEnd(); return; }
+  if(!q){ finish(); return; }
   const p = progressInfo();
   const el = document.getElementById('quiz');
   let opts='';
@@ -529,11 +539,78 @@ function goBack(){
   render();
 }
 
-function renderEnd(){
-  const bucket = roteia(state.flow, state.answers);
+/* ---- MOTOR DE FAIXAS (Fluxo 2, seção 4: classes e pesos) ---- */
+/* pouco leite (1A) não tem caixinha própria no quiz: gatilho provisório
+   (P9 = produzir mais leite  OU  P3 = fica horas / larga e quer = "nunca enche").
+   A validar com a Day. */
+function poucoLeite(a){
+  return a.p9==='produzir_leite' || any(a.p3,['horas_peito','larga_quer']);
+}
+function montaFaixas(a){
+  const c1=[], c2=[], c3=[], c4=[];
+  // Classe 1 (extração) — ordem = peso
+  if(poucoLeite(a)) c1.push('pouco_leite');
+  if(any(a.p6,['doendo','rachadura','sangrando'])) c1.push('dor');
+  if(has(a.p6,'empedrados')) c1.push('empedrado');
+  // Classe 2 (esforço)
+  if(a.p7==='sim') c2.push('calo');
+  if(a.p4==='menos4' || a.p4==='f4_5') c2.push('pouca_fralda');
+  // Classe 3 (bico)
+  if(has(a.p6,'silicone')) c3.push('silicone');
+  if(has(a.p6,'raynaud')) c3.push('raynaud');
+  if(a.p8==='sim') c3.push('batom');
+  // Classe 4 (peso) — só acende quando o peso está abaixo (bate com os 4 exemplos da seção 4).
+  // A faixa "bom ganho + outras dificuldades" (peso_bom_dif) existe pronta, mas o gatilho
+  // exato fica pendente pra confirmar com a Day (senão apareceria em quase todo Cat 2).
+  const pesoAbaixo = a.p5==='pouco_abaixo' || a.p5==='bem_abaixo';
+  if(pesoAbaixo) c4.push('peso_abaixo');
+
+  const classes=[c1,c2,c3,c4];
+  const sel=new Set();
+  classes.forEach(c=>{ if(c.length) sel.add(c[0]); });        // base: 1 por classe
+  let rank=1;                                                  // reforço: preenche até ~4
+  while(sel.size<4){
+    let added=false;
+    for(const c of classes){ if(sel.size>=4) break; if(c[rank]){ sel.add(c[rank]); added=true; } }
+    if(!added) break; rank++;
+  }
+  const ordem=[];                                             // exibição na ordem das classes
+  classes.forEach(c=>c.forEach(f=>{ if(sel.has(f)) ordem.push(f); }));
+  return ordem;
+}
+
+/* ---- FIM DO QUIZ ---- */
+function finish(){
+  const a = state.answers;
+  const bucket = roteia(state.flow, a);
+  window.__quizResult = { flow:state.flow, bucket, answers:a };
+
+  // Fluxo 2 · Cat 2 / Cat 3 → página de resposta modular (com loading + redirect)
+  if(state.flow==='rn' && ['rn_cat2_guia','rn_cat2_silicone','rn_cat3_acomp'].includes(bucket)){
+    const cat = bucket==='rn_cat3_acomp' ? 'cat3' : 'cat2';
+    const oferta = bucket==='rn_cat3_acomp' ? 'guia_acomp' : (bucket==='rn_cat2_silicone' ? 'guia_pesque' : 'guia');
+    const params = new URLSearchParams({cat, oferta, enfase:a.p9||'', faixas:montaFaixas(a).join(',')});
+    showLoading('resultado.html?'+params.toString());
+    return;
+  }
+  renderEnd(bucket); // demais desfechos: hand-off por enquanto
+}
+
+function showLoading(url){
+  const el = document.getElementById('quiz');
+  el.innerHTML = `
+    <div class="screen loading">
+      <div class="spinner"><div class="pulse"></div><div class="heart">🤍</div></div>
+      <div class="msg" id="loadMsg">Analisando as respostas de vocês</div>
+      <div class="sub">montando o seu resultado…</div>
+    </div>`;
+  const msgs=['Analisando as respostas de vocês','Olhando cada sinal que você marcou','Montando o seu resultado'];
+  let i=0; const t=setInterval(()=>{ i=(i+1)%msgs.length; const m=document.getElementById('loadMsg'); if(m) m.textContent=msgs[i]; },1100);
+  setTimeout(()=>{ clearInterval(t); window.location.href=url; }, 3300);
+}
+
+function renderEnd(bucket){
   const d = DESFECHOS[bucket] || {emoji:'💚', titulo:'Prontinho!', caminho:'—', oferta:'—'};
-  // guarda pra plugar o redirect futuro
-  window.__quizResult = { flow:state.flow, bucket, answers:state.answers };
   const el = document.getElementById('quiz');
   el.innerHTML = `
     <div class="screen">
@@ -544,7 +621,7 @@ function renderEnd(){
         <div class="lbl">Caminho recomendado</div>
         <div class="nome">${d.oferta}</div>
       </div>
-      <p class="devnote">A página de resposta completa (com a explicação de cada sinal) entra aqui em seguida, como site à parte.
+      <p class="devnote">A página de resposta desse desfecho entra em seguida (mesmo modelo modular).
         <br><span class="devbucket">desfecho: ${bucket}</span></p>
       <div class="btn-row"><button class="btn btn-ghost" onclick="startQuiz()">↻ refazer o quiz</button></div>
     </div>`;
