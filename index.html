@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz Amamentação — protótipo visual</title>
+<title>Será que meu bebê está mamando bem?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Nunito:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
@@ -84,6 +84,8 @@
     display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra-sm)}
   .day .blob span{font-size:12px;color:#fff;font-weight:700;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.15);text-align:center;padding:0 12px}
   .day .ph-emoji{font-size:60px}
+  .hero-img{width:236px;height:236px;object-fit:cover;display:block;margin:18px auto 22px;
+    border-radius:62% 38% 46% 54% / 55% 48% 52% 45%;border:5px solid #fff;box-shadow:var(--sombra-sm)}
 
   /* ---------- botões ---------- */
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -160,7 +162,6 @@
   <button data-go="0" class="on">Abertura</button>
   <button data-go="1">Idade (P1)</button>
   <button data-go="2">Pergunta</button>
-  <button data-go="3">Resultado</button>
 </div>
 
 <div class="stage">
@@ -168,15 +169,12 @@
   <!-- TELA 0 — ABERTURA -->
   <div class="screen active" data-screen="0">
     <div class="card">
-      <div class="selo"><div class="baby">🤱</div><span>Manual RN</span></div>
-      <div class="eyebrow">Quiz da Amamentação</div>
-      <h1 class="title">Será que meu bebê<br>está mamando bem?</h1>
+      <h1 class="title" style="margin-top:6px">Será que meu bebê<br>está mamando bem?</h1>
       <p class="lead">Responda algumas perguntas rápidas e descubra o que os sinais do seu bebê estão te contando, e o que fazer a respeito.</p>
-      <div class="day"><div class="blob"><span class="ph-emoji">👩‍🍼</span></div></div>
+      <img class="hero-img" src="assets/hero.webp" alt="Bebê mamando no peito">
       <div class="btn-row">
         <button class="btn btn-verde" onclick="go(1)">Começar o quiz</button>
       </div>
-      <p class="micro">Leva menos de <b>2 minutos</b> · feito pela Day</p>
     </div>
   </div>
 
@@ -216,38 +214,15 @@
     </div>
   </div>
 
-  <!-- TELA 3 — RESULTADO (fragmento Categoria 2) -->
+  <!-- TELA 3 — FIM DO PROTÓTIPO (a página de resposta será um site à parte) -->
   <div class="screen" data-screen="3">
-    <div class="card result">
-      <div class="selo" style="margin-bottom:14px"><div class="baby">🤱</div><span>Seu resultado</span></div>
-
-      <div class="abertura">
-        <span class="tag">Olha só o que descobri…</span>
-        <p>Você está no caminho certo, mas algumas coisas que você está vivendo não são normais. E elas estão te avisando de uma coisa importante: o bebê está com um pouco de dificuldade pra mamar.</p>
-        <p>Não é nada sem solução, mas também não é pra deixar passar. Vou te mostrar, item por item, o que cada sinal que você marcou está querendo dizer.</p>
+    <div class="card">
+      <img class="hero-img" src="assets/hero.webp" alt="Bebê mamando no peito" style="margin-top:6px">
+      <h1 class="title" style="font-size:24px">Prontinho!</h1>
+      <p class="lead">Esse é o clima visual do quiz. As perguntas de cada fase e as páginas de resposta entram no próximo passo.</p>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-verde" onclick="go(0)">↻ ver de novo</button>
       </div>
-
-      <div class="faixa">
-        <div class="img-ph">🖼️ foto/ilustração: calo no lábio</div>
-        <div class="fx-body">
-          <h3>O calo no lábio</h3>
-          <p>Aquela bolhinha no lábio do bebê não aparece à toa. Ela surge quando ele precisa fazer muita força com a boca pra conseguir segurar o peito e mamar.</p>
-          <p>Ou seja: ele está se esforçando bem mais do que deveria pra tirar o leite. Bebê que mama tranquilo fica de boca relaxada e não cria calo.</p>
-          <p>Quando ele aprende a abocanhar de um jeito mais fácil, o lábio descansa e o calo sara sozinho.</p>
-        </div>
-      </div>
-
-      <p class="juncao">"Não espere pra ver no que vai dar. Resolva agora, enquanto depende só de um ajuste."</p>
-
-      <div class="cta-box">
-        <h3>Guia da Pega</h3>
-        <p>Você aprende, de um jeito simples, como facilitar pro bebê pegar o peito e mamar de forma efetiva. Poucos minutos pra entender e já colocar em prática na próxima mamada.</p>
-        <button class="btn btn-rosa">Quero ajudar meu bebê a mamar melhor</button>
-        <div class="price">Guia da Pega · R$67</div>
-      </div>
-
-      <p class="foot-note">↑ fragmento ilustrativo · a página real monta as faixas conforme o que a mãe marcar</p>
-      <div class="btn-row" style="margin-top:14px"><button class="btn btn-ghost" onclick="go(0)">↻ recomeçar</button></div>
     </div>
   </div>
 
