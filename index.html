@@ -8,130 +8,150 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Nunito:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
+  *{box-sizing:border-box;margin:0;padding:0}
   :root{
     --blush:#F6D7DD; --blush-claro:#FBE9EC; --rosa:#EE8DA8; --rosa-claro:#F7B7C6;
     --rosa-link:#E86A8E; --verde:#2F4A3D; --verde-hover:#38583f; --azul:#BFE1EC;
     --coral:#F5A38C; --lavanda:#ECE0EF; --grafite:#33302F; --cinza:#8A8A8A; --branco:#FFFFFF;
-    --sombra:0 18px 45px -18px rgba(180,110,130,.45);
+    --grad:linear-gradient(100deg,var(--rosa) 0%,var(--verde) 130%);
+    --sombra:0 26px 70px -22px rgba(160,90,115,.5);
     --sombra-sm:0 8px 22px -10px rgba(180,110,130,.4);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{font-family:'Nunito',sans-serif;color:var(--grafite);
-    background:linear-gradient(180deg,#FCEEF1 0%,var(--blush) 45%,#F2CBD5 100%);
-    background-attachment:fixed;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    background:linear-gradient(165deg,#FCEEF1 0%,var(--blush) 48%,#F2CBD5 120%);
+    background-attachment:fixed;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:18px;position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-  /* decoração de fundo */
+  /* decoração de fundo (nuvens + corações) */
   .bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-  .heart{position:absolute;animation:float 7s ease-in-out infinite}
-  .heart svg{display:block;filter:drop-shadow(0 8px 12px rgba(0,0,0,.06))}
-  @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-22px) rotate(4deg)}}
-  .h1{top:11%;left:5%;width:66px;animation-delay:.2s}
-  .h2{top:24%;right:6%;width:50px;animation-delay:1.4s}
-  .h3{bottom:20%;left:8%;width:42px;animation-delay:.8s}
-  .h4{bottom:9%;right:9%;width:60px;animation-delay:2s}
-  .h5{top:60%;left:3%;width:32px;animation-delay:1.1s}
-  .h6{top:47%;right:4%;width:36px;animation-delay:.5s}
+  .heart{position:absolute;opacity:.5;animation:float 7s ease-in-out infinite}
+  .heart svg{display:block;filter:drop-shadow(0 8px 12px rgba(0,0,0,.05))}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-20px) rotate(4deg)}}
+  .h1{top:5%;left:7%;width:50px;animation-delay:.2s}
+  .h2{top:18%;right:7%;width:38px;animation-delay:1.4s}
+  .h3{bottom:15%;left:8%;width:34px;animation-delay:.8s}
+  .h4{bottom:5%;right:9%;width:46px;animation-delay:2s}
+  .h5{top:58%;left:3%;width:26px;animation-delay:1.1s}
+  .h6{top:44%;right:3%;width:28px;animation-delay:.5s}
+  @media(max-width:760px){.h2,.h3,.h5,.h6{display:none}}
   .cloud-top{position:fixed;top:-2px;left:0;width:100%;z-index:0;pointer-events:none}
   .cloud-bottom{position:fixed;bottom:-2px;left:0;width:100%;z-index:0;pointer-events:none;transform:rotate(180deg)}
 
-  .stage{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:34px 18px}
-  .card{width:100%;max-width:500px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.9);border-radius:32px;padding:38px 28px;box-shadow:var(--sombra);
-    text-align:center;position:relative}
+  /* ── Card único (frame tipo app) ── */
+  #wrapper{
+    position:relative;z-index:2;width:100%;max-width:440px;min-height:592px;
+    background:linear-gradient(170deg,#ffffff 0%,#fff6f8 100%);
+    border:1px solid rgba(255,255,255,.9);border-radius:28px;overflow:hidden;
+    box-shadow:var(--sombra)}
 
-  h1.title{font-family:'Playfair Display',serif;font-weight:700;font-size:30px;line-height:1.2;margin-bottom:14px}
-  .lead{font-size:16px;color:#6f6a6a;line-height:1.55;margin-bottom:8px}
-  .hero-img{width:236px;height:236px;object-fit:cover;display:block;margin:18px auto 22px;
-    border-radius:62% 38% 46% 54% / 55% 48% 52% 45%;border:5px solid #fff;box-shadow:var(--sombra-sm)}
+  /* progresso colado no topo */
+  #prog-track{height:6px;width:100%;background:#F1DBE1}
+  #prog-fill{height:100%;width:0;background:var(--grad);border-radius:0 100px 100px 0;
+    box-shadow:0 0 12px rgba(238,141,168,.5);transition:width .45s ease}
+
+  /* header + voltar */
+  #head{display:flex;align-items:center;padding:14px 18px 0;min-height:46px}
+  #btn-back{width:34px;height:34px;border-radius:50%;border:1px solid #EAD3DA;background:var(--blush-claro);
+    color:var(--rosa-link);font-size:17px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:.18s}
+  #btn-back:hover{background:var(--rosa-claro);color:#fff}
+
+  /* screens */
+  .screen{padding:2px 24px 30px;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+  .step-label{color:var(--rosa-link);font-size:12px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;text-align:center;margin:12px 0 14px}
+  .q-title{font-family:'Playfair Display',serif;color:var(--grafite);font-size:24px;font-weight:600;
+    line-height:1.28;text-align:center;margin-bottom:6px;text-wrap:balance}
+  .q-title span{color:var(--rosa-link)}
+  .q-hint{font-size:13px;color:var(--cinza);text-align:center;margin-bottom:20px}
+  .q-gap{height:18px}
+
+  /* opções (bolinha de rádio à esquerda, estilo perfis) */
+  .options{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;cursor:pointer;
+    background:#fff;border:1.5px solid #EFD9DF;border-radius:16px;padding:15px 16px;
+    font-family:'Nunito',sans-serif;transition:background .18s,border-color .18s,transform .12s,box-shadow .18s}
+  .opt:hover{border-color:var(--rosa-claro);transform:translateY(-2px)}
+  .opt.sel{background:#FDEFF3;border-color:var(--rosa);box-shadow:0 8px 22px -10px rgba(238,141,168,.5)}
+  .radio{width:22px;height:22px;min-width:22px;border-radius:50%;border:2px solid #E0C6CD;
+    display:flex;align-items:center;justify-content:center;transition:border-color .18s}
+  .radio.sq{border-radius:7px}
+  .radio .dot{width:11px;height:11px;border-radius:50%;background:var(--grad);display:none}
+  .radio.sq .dot{border-radius:3px}
+  .opt.sel .radio{border-color:var(--rosa)}
+  .opt.sel .dot{display:block}
+  .otext{color:#5c5757;font-size:14.5px;font-weight:600;line-height:1.42}
+
+  /* foto (perguntas com imagem de referência) */
+  .foto-ref{height:150px;border-radius:16px;margin-bottom:16px;
+    background:repeating-linear-gradient(45deg,#FBE9EC,#FBE9EC 12px,#F7DCE2 12px,#F7DCE2 24px);
+    display:flex;align-items:center;justify-content:center;color:var(--rosa-link);font-weight:700;
+    font-size:12.5px;gap:8px;text-align:center;padding:0 18px}
+  .foto-row{display:flex;gap:11px}
+  .foto-row .opt{flex:1;justify-content:center}
 
   /* botões */
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;
-    font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:16px 30px;border-radius:100px;
-    transition:.2s;text-decoration:none;width:100%;max-width:340px}
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:15px 28px;border-radius:100px;
+    transition:.2s;text-decoration:none;width:100%}
   .btn-verde{background:var(--verde);color:#fff;box-shadow:0 12px 24px -10px rgba(47,74,61,.7)}
   .btn-verde:hover{background:var(--verde-hover);transform:translateY(-2px)}
-  .btn-verde:disabled{background:#b9c4bd;box-shadow:none;cursor:not-allowed;transform:none}
-  .btn-rosa{background:linear-gradient(180deg,var(--rosa),var(--rosa-claro));color:#fff;box-shadow:0 12px 24px -10px rgba(238,141,168,.75)}
-  .btn-rosa:hover{transform:translateY(-2px)}
-  .btn-ghost{background:transparent;color:var(--rosa-link);font-weight:700;font-size:14px;box-shadow:none;padding:10px}
-  .btn-row{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+  .btn-verde:disabled{background:#c3cdc7;box-shadow:none;cursor:not-allowed;transform:none}
+  .btn-cont{margin-top:20px}
 
-  /* progresso */
-  .progress{display:flex;align-items:center;gap:10px;margin-bottom:22px}
-  .progress .bar{flex:1;height:8px;background:#fff;border-radius:100px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(180,110,130,.25)}
-  .progress .fill{height:100%;background:linear-gradient(90deg,var(--rosa),var(--verde));border-radius:100px;transition:width .4s}
-  .progress .step{font-size:12px;color:var(--cinza);font-weight:700;white-space:nowrap}
+  /* abertura */
+  .welcome{text-align:center;padding-top:8px}
+  .welcome .title{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;line-height:1.2;margin-bottom:12px;text-wrap:balance}
+  .welcome .lead{font-size:15.5px;color:#6f6a6a;line-height:1.55;margin:0 auto 4px;max-width:300px;text-wrap:balance}
+  .hero-img{width:210px;height:210px;object-fit:cover;display:block;margin:20px auto 22px;
+    border-radius:60% 40% 46% 54%/54% 48% 52% 46%;border:5px solid #fff;box-shadow:var(--sombra-sm)}
+  .welcome .btn-verde{max-width:330px;margin:0 auto}
 
-  h2.q{font-family:'Playfair Display',serif;font-weight:600;font-size:23px;line-height:1.3;margin-bottom:6px;text-align:left}
-  .q-hint{font-size:13px;color:var(--cinza);text-align:left;margin-bottom:20px}
+  /* loading do resultado */
+  .loading{text-align:center;padding:52px 26px 46px}
+  .loading .lua{width:78px;height:78px;margin:0 auto;position:relative}
+  .loading .lua .pulse{position:absolute;inset:0;border-radius:50%;background:var(--rosa-claro);animation:pulse 1.5s ease-in-out infinite}
+  .loading .lua .h{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;animation:beat 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(.55);opacity:.5}50%{transform:scale(1);opacity:.14}}
+  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
+  .loading .lt{font-family:'Playfair Display',serif;color:var(--grafite);font-size:23px;font-weight:600;margin:22px 0 10px}
+  .loading .lm{color:#6f6a6a;font-size:15px;font-weight:600;min-height:46px;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+  .load-bar{width:78%;height:6px;border-radius:100px;background:#F1DBE1;margin:24px auto 0;overflow:hidden}
+  .load-bar span{display:block;height:100%;width:0;border-radius:100px;background:var(--grad);box-shadow:0 0 12px rgba(238,141,168,.6);transition:width .35s}
+  .load-tag{font-size:12px;color:var(--rosa-link);margin-top:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 
-  .options{display:flex;flex-direction:column;gap:12px;text-align:left}
-  .opt{display:flex;align-items:center;gap:14px;background:#fff;border:2px solid #F2DFE4;border-radius:18px;
-    padding:15px 18px;cursor:pointer;transition:.18s;font-size:15.5px;font-weight:600;color:#5c5757}
-  .opt:hover{border-color:var(--rosa-claro);transform:translateY(-1px)}
-  .opt.sel{border-color:var(--rosa);background:#FDEFF3}
-  .opt .ic{width:40px;height:40px;border-radius:12px;background:var(--blush-claro);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .opt.sel .ic{background:var(--rosa-claro)}
-  .opt .chk{margin-left:auto;width:24px;height:24px;border-radius:50%;border:2px solid #E4CDD3;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.18s}
-  .opt.sel .chk{background:var(--rosa);border-color:var(--rosa)}
-  .opt.sel .chk::after{content:'✓';color:#fff;font-size:14px;font-weight:800}
-
-  /* foto (perguntas com imagem de referência) */
-  .foto-ref{height:170px;border-radius:18px;margin-bottom:18px;
-    background:repeating-linear-gradient(45deg,#FBE9EC,#FBE9EC 12px,#F7DCE2 12px,#F7DCE2 24px);
-    display:flex;align-items:center;justify-content:center;color:var(--rosa-link);font-weight:700;font-size:13px;gap:8px;text-align:center;padding:0 18px}
-  .foto-row{display:flex;gap:12px}
-  .foto-row .opt{flex:1;justify-content:center}
-  .foto-row .opt .chk{display:none}
-
-  /* tela de carregamento */
-  .loading{display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 0}
-  .spinner{width:76px;height:76px;position:relative}
-  .spinner .pulse{position:absolute;inset:0;border-radius:50%;background:var(--rosa-claro);animation:pulse 1.4s ease-in-out infinite}
-  .spinner .heart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;animation:beat 1.4s ease-in-out infinite}
-  @keyframes pulse{0%,100%{transform:scale(.55);opacity:.5}50%{transform:scale(1);opacity:.12}}
-  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-  .loading .msg{font-family:'Playfair Display',serif;font-size:20px;color:var(--grafite);text-align:center;min-height:26px}
-  .loading .sub{font-size:14px;color:var(--cinza)}
-
-  /* tela final */
-  .end-emoji{font-size:52px;margin-bottom:6px}
-  .caminho{background:linear-gradient(160deg,var(--verde),#40614c);border-radius:22px;padding:24px 22px;color:#fff;margin:18px 0 10px;box-shadow:var(--sombra-sm)}
-  .caminho .lbl{font-size:12px;letter-spacing:1px;text-transform:uppercase;opacity:.8;font-weight:700}
-  .caminho .nome{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-top:4px}
+  /* tela final (hand-off provisório) */
+  .end{text-align:center;padding-top:6px}
+  .end .emoji{font-size:50px;margin-bottom:4px}
+  .end .title{font-family:'Playfair Display',serif;font-size:23px;font-weight:600;line-height:1.25;margin-bottom:10px}
+  .end .lead{font-size:15px;color:#6f6a6a;line-height:1.5}
+  .caminho{background:linear-gradient(160deg,var(--verde),#40614c);border-radius:20px;padding:22px;color:#fff;margin:18px 0 6px;box-shadow:var(--sombra-sm)}
+  .caminho .lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.8;font-weight:800}
+  .caminho .nome{font-family:'Playfair Display',serif;font-size:21px;font-weight:600;margin-top:4px}
   .devnote{font-size:12px;color:#b98a97;margin-top:14px;line-height:1.5}
   .devbucket{font-family:monospace;font-size:11px;color:#c99;background:#fff;border-radius:8px;padding:4px 8px;display:inline-block;margin-top:6px}
-
-  .screen{animation:fade .35s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .btn-ghost{background:none;border:none;color:var(--rosa-link);font-weight:700;font-size:14px;cursor:pointer;margin-top:16px;font-family:'Nunito'}
 </style>
 </head>
 <body>
 
-<svg class="cloud-top" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" fill-opacity="0.75" d="M0,60 C120,20 240,20 360,45 C480,70 560,10 700,35 C840,60 920,15 1060,40 C1200,65 1320,25 1440,55 L1440,0 L0,0 Z"/></svg>
-<svg class="cloud-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" fill-opacity="0.55" d="M0,60 C120,20 240,20 360,45 C480,70 560,10 700,35 C840,60 920,15 1060,40 C1200,65 1320,25 1440,55 L1440,0 L0,0 Z"/></svg>
+<svg class="cloud-top" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" fill-opacity="0.7" d="M0,60 C120,20 240,20 360,45 C480,70 560,10 700,35 C840,60 920,15 1060,40 C1200,65 1320,25 1440,55 L1440,0 L0,0 Z"/></svg>
+<svg class="cloud-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" fill-opacity="0.5" d="M0,60 C120,20 240,20 360,45 C480,70 560,10 700,35 C840,60 920,15 1060,40 C1200,65 1320,25 1440,55 L1440,0 L0,0 Z"/></svg>
 <div class="bg-deco" id="deco"></div>
 
-<div class="stage">
-  <!-- ABERTURA -->
-  <div id="welcome" class="card screen">
-    <h1 class="title" style="margin-top:6px">Será que meu bebê<br>está mamando bem?</h1>
-    <p class="lead">Responda algumas perguntas rápidas e descubra o que os sinais do seu bebê estão te contando, e o que fazer a respeito.</p>
-    <img class="hero-img" src="assets/hero.webp" alt="Bebê mamando no peito">
-    <div class="btn-row"><button class="btn btn-verde" onclick="startQuiz()">Começar o quiz</button></div>
-  </div>
-
-  <!-- QUIZ (renderizado pelo engine) -->
-  <div id="quiz" class="card screen" style="display:none"></div>
+<div id="wrapper">
+  <div id="prog-track"><div id="prog-fill"></div></div>
+  <div id="head"><button id="btn-back" onclick="goBack()">&#8592;</button></div>
+  <div id="content"></div>
 </div>
 
 <script>
 /* =========================================================================
-   QUIZ AMAMENTAÇÃO — engine data-driven
+   QUIZ AMAMENTAÇÃO — engine data-driven (apresentação no padrão do quiz de perfis)
    Fonte da verdade: QUIZ-AMAMENTACAO.md (Manual do Recém-Nascido / Dayane)
-   O quiz coleta respostas + calcula o DESFECHO (caminho/oferta).
-   A página de resposta de cada desfecho é um site à parte (redirect futuro).
+   Coleta respostas → calcula o DESFECHO → loading → redirect pra resultado.html
    ========================================================================= */
 
 /* ---- helpers de resposta ---- */
@@ -143,10 +163,10 @@ const IDADE = {
   id:'idade', type:'single',
   text:'Pra começar, em que fase vocês estão?', hint:'Escolha uma opção',
   options:[
-    {v:'gestante', ic:'🤰', label:'Estou grávida'},
-    {v:'rn',       ic:'👶', label:'Recém-nascido (0 a 30 dias)'},
-    {v:'m1a5',     ic:'🍼', label:'1 a 5 meses'},
-    {v:'m6a12',    ic:'🧸', label:'6 a 12 meses'},
+    {v:'gestante', label:'Estou grávida'},
+    {v:'rn',       label:'Recém-nascido (0 a 30 dias)'},
+    {v:'m1a5',     label:'1 a 5 meses'},
+    {v:'m6a12',    label:'6 a 12 meses'},
   ]
 };
 
@@ -156,192 +176,192 @@ const FLOWS = {
   /* -------- FLUXO 2 : 0 a 30 dias (carro-chefe) -------- */
   rn:[
     {id:'p2', type:'single', text:'Como está a amamentação hoje?', options:[
-      {v:'so_peito', ic:'🤱', label:'Só peito'},
-      {v:'peito_formula', ic:'🍼', label:'Peito + fórmula'},
-      {v:'so_formula', ic:'🍼', label:'Só fórmula'},
+      {v:'so_peito', label:'Só peito'},
+      {v:'peito_formula', label:'Peito + fórmula'},
+      {v:'so_formula', label:'Só fórmula'},
     ]},
     {id:'p2b', type:'single', showIf:a=>a.p2==='peito_formula',
       text:'Quantas mamadeiras de fórmula você dá por dia?', options:[
-      {v:'f1_2', ic:'1️⃣', label:'1 a 2 vezes'},
-      {v:'f3_5', ic:'3️⃣', label:'3 a 5 vezes'},
-      {v:'f5_8', ic:'5️⃣', label:'5 a 8 vezes'},
-      {v:'f8_10', ic:'8️⃣', label:'8 a 10 vezes'},
+      {v:'f1_2', label:'1 a 2 vezes'},
+      {v:'f3_5', label:'3 a 5 vezes'},
+      {v:'f5_8', label:'5 a 8 vezes'},
+      {v:'f8_10', label:'8 a 10 vezes'},
     ]},
     {id:'p2c', type:'single', showIf:a=>a.p2==='so_formula',
       text:'Você gostaria de voltar a amamentar só no peito?', options:[
-      {v:'sim', ic:'💚', label:'Sim'},
-      {v:'nao', ic:'🤍', label:'Não'},
+      {v:'sim', label:'Sim'},
+      {v:'nao', label:'Não'},
     ]},
     {id:'p3', type:'multi', text:'Durante as mamadas, ele costuma:', hint:'Pode marcar mais de uma', options:[
-      {v:'solta_satisfeito', ic:'😌', label:'Solta o peito sozinho e fica satisfeito um tempo'},
-      {v:'dorme_rapido', ic:'😴', label:'Dorme rápido, antes de mamar direito'},
-      {v:'horas_peito', ic:'⏳', label:'Fica horas no peito, parece que nunca enche'},
-      {v:'larga_quer', ic:'🔁', label:'Larga e quer de novo pouco depois'},
-      {v:'briga', ic:'😣', label:'Briga com o peito, custa a pegar'},
+      {v:'solta_satisfeito', label:'Solta o peito sozinho e fica satisfeito um tempo'},
+      {v:'dorme_rapido', label:'Dorme rápido, antes de mamar direito'},
+      {v:'horas_peito', label:'Fica horas no peito, parece que nunca enche'},
+      {v:'larga_quer', label:'Larga e quer de novo pouco depois'},
+      {v:'briga', label:'Briga com o peito, custa a pegar'},
     ]},
     {id:'p4', type:'single', text:'Quantas fraldas molhadas em 24h?', options:[
-      {v:'menos4', ic:'💧', label:'Menos de 4'},
-      {v:'f4_5', ic:'💧', label:'4 a 5'},
-      {v:'f6_8', ic:'💦', label:'6 a 8'},
-      {v:'mais8', ic:'💦', label:'Mais de 8'},
-      {v:'nao_sei', ic:'🤷', label:'Não sei dizer'},
+      {v:'menos4', label:'Menos de 4'},
+      {v:'f4_5', label:'4 a 5'},
+      {v:'f6_8', label:'6 a 8'},
+      {v:'mais8', label:'Mais de 8'},
+      {v:'nao_sei', label:'Não sei dizer'},
     ]},
     {id:'p5', type:'single', text:'Como está o ganho de peso do bebê?', options:[
-      {v:'bem', ic:'⚖️', label:'Ganhando bem, dentro do esperado'},
-      {v:'super_bem', ic:'📈', label:'Ganhando super bem, até acima da curva'},
-      {v:'pouco_abaixo', ic:'📉', label:'Um pouco abaixo da curva'},
-      {v:'bem_abaixo', ic:'⚠️', label:'Bem abaixo do esperado'},
+      {v:'bem', label:'Ganhando bem, dentro do esperado'},
+      {v:'super_bem', label:'Ganhando super bem, até acima da curva'},
+      {v:'pouco_abaixo', label:'Um pouco abaixo da curva'},
+      {v:'bem_abaixo', label:'Bem abaixo do esperado'},
     ]},
     {id:'p6', type:'multi', text:'Como estão seus seios?', hint:'Pode marcar mais de uma', options:[
-      {v:'tranquilos', ic:'🙂', label:'Tranquilos'},
-      {v:'sensiveis', ic:'😐', label:'Sensíveis'},
-      {v:'doendo', ic:'😖', label:'Doendo'},
-      {v:'rachadura', ic:'🩹', label:'Com rachadura (fissura)'},
-      {v:'sangrando', ic:'🩸', label:'Sangrando'},
-      {v:'empedrados', ic:'🪨', label:'Empedrados ou muito cheios'},
-      {v:'raynaud', ic:'❄️', label:'O bico fica branquinho e sensível depois de mamar'},
-      {v:'silicone', ic:'🛡️', label:'Uso bico de silicone e queria largar'},
+      {v:'tranquilos', label:'Tranquilos'},
+      {v:'sensiveis', label:'Sensíveis'},
+      {v:'doendo', label:'Doendo'},
+      {v:'rachadura', label:'Com rachadura (fissura)'},
+      {v:'sangrando', label:'Sangrando'},
+      {v:'empedrados', label:'Empedrados ou muito cheios'},
+      {v:'raynaud', label:'O bico fica branquinho e sensível depois de mamar'},
+      {v:'silicone', label:'Uso bico de silicone e queria largar'},
     ]},
     {id:'p7', type:'foto', text:'Depois de mamar, os lábios do bebê ficam com calo (bolhinha)?',
       foto:'foto/ilustração: calo (bolhinha) no lábio do bebê'},
     {id:'p8', type:'foto', text:'Depois de mamar, seu bico sai achatado, em formato de batom?',
       foto:'foto/ilustração: bico em formato de batom'},
-    {id:'p9', type:'single', text:'Se desse pra resolver UMA coisa hoje, qual seria?', hint:'A que mais pesa pra você', options:[
-      {v:'certeza', ic:'✅', label:'Ter certeza de que ele está mamando bem'},
-      {v:'produzir_leite', ic:'🥛', label:'Produzir mais leite'},
-      {v:'parar_dor', ic:'🌡️', label:'Parar de sentir dor'},
-      {v:'satisfeito', ic:'😴', label:'Fazer ele ficar satisfeito por mais tempo'},
-      {v:'seguranca', ic:'🤍', label:'Me sentir mais segura, menos perdida'},
+    {id:'p9', type:'single', text:'Se desse pra resolver <span>uma coisa</span> hoje, qual seria?', hint:'A que mais pesa pra você', options:[
+      {v:'certeza', label:'Ter certeza de que ele está mamando bem'},
+      {v:'produzir_leite', label:'Produzir mais leite'},
+      {v:'parar_dor', label:'Parar de sentir dor'},
+      {v:'satisfeito', label:'Fazer ele ficar satisfeito por mais tempo'},
+      {v:'seguranca', label:'Me sentir mais segura, menos perdida'},
     ]},
     {id:'p10', type:'single', showIf:a=>categoriaRN(a)==='cat1' && a.p2!=='so_formula',
       text:'Que bom! E o sono, como está?', hint:'Falta só isso pra fechar', options:[
-      {v:'dorme_bem', ic:'🌙', label:'Ele dorme bem'},
-      {v:'acorda_demais', ic:'😪', label:'Acorda demais de madrugada'},
-      {v:'so_peito_colo', ic:'🤱', label:'Só dorme mamando ou no colo'},
+      {v:'dorme_bem', label:'Ele dorme bem'},
+      {v:'acorda_demais', label:'Acorda demais de madrugada'},
+      {v:'so_peito_colo', label:'Só dorme mamando ou no colo'},
     ]},
   ],
 
   /* -------- FLUXO 3 : 1 a 5 meses -------- */
   m1a5:[
     {id:'p2', type:'single', text:'Como está a amamentação hoje?', options:[
-      {v:'so_peito', ic:'🤱', label:'Só peito'},
-      {v:'peito_formula', ic:'🍼', label:'Peito + fórmula'},
-      {v:'so_formula', ic:'🍼', label:'Só fórmula'},
+      {v:'so_peito', label:'Só peito'},
+      {v:'peito_formula', label:'Peito + fórmula'},
+      {v:'so_formula', label:'Só fórmula'},
     ]},
     {id:'p2b', type:'single', showIf:a=>a.p2==='peito_formula',
       text:'Quantas mamadeiras de fórmula por dia?', options:[
-      {v:'f1_2', ic:'1️⃣', label:'1 a 2 vezes'},
-      {v:'f3_5', ic:'3️⃣', label:'3 a 5 vezes'},
-      {v:'f5_8', ic:'5️⃣', label:'5 a 8 vezes'},
-      {v:'f8_10', ic:'8️⃣', label:'8 a 10 vezes'},
+      {v:'f1_2', label:'1 a 2 vezes'},
+      {v:'f3_5', label:'3 a 5 vezes'},
+      {v:'f5_8', label:'5 a 8 vezes'},
+      {v:'f8_10', label:'8 a 10 vezes'},
     ]},
     {id:'p2c', type:'single', showIf:a=>a.p2==='so_formula',
       text:'Você gostaria de voltar a amamentar só no peito?', options:[
-      {v:'sim', ic:'💚', label:'Sim'},
-      {v:'nao', ic:'🤍', label:'Não'},
+      {v:'sim', label:'Sim'},
+      {v:'nao', label:'Não'},
     ]},
     {id:'p3', type:'multi', text:'Durante as mamadas, ele costuma:', hint:'Pode marcar mais de uma', options:[
-      {v:'satisfeito', ic:'😌', label:'Mama e fica satisfeito um tempo'},
-      {v:'dorme_peito', ic:'😴', label:'Dorme no peito quase toda mamada'},
-      {v:'muito_tempo', ic:'⏳', label:'Fica muito tempo no peito'},
-      {v:'briga_recusa', ic:'😣', label:'Briga ou recusa o peito'},
+      {v:'satisfeito', label:'Mama e fica satisfeito um tempo'},
+      {v:'dorme_peito', label:'Dorme no peito quase toda mamada'},
+      {v:'muito_tempo', label:'Fica muito tempo no peito'},
+      {v:'briga_recusa', label:'Briga ou recusa o peito'},
     ]},
     {id:'p4', type:'single', text:'Ele acorda muito de madrugada?', options:[
-      {v:'nao', ic:'🌙', label:'Não, dorme bem'},
-      {v:'algumas', ic:'😪', label:'Sim, acorda algumas vezes'},
-      {v:'cada_2h', ic:'😵', label:'Sim, de 2 em 2 horas ou menos'},
+      {v:'nao', label:'Não, dorme bem'},
+      {v:'algumas', label:'Sim, acorda algumas vezes'},
+      {v:'cada_2h', label:'Sim, de 2 em 2 horas ou menos'},
     ]},
     {id:'p5', type:'multi', text:'Quando acorda à noite, normalmente ele:', hint:'Pode marcar mais de uma', options:[
-      {v:'mama_volta', ic:'🍼', label:'Mama bastante e volta a dormir'},
-      {v:'golinho', ic:'💤', label:'Mama só um pouquinho pra dormir de novo'},
-      {v:'so_colo', ic:'🤗', label:'Só quer colo'},
+      {v:'mama_volta', label:'Mama bastante e volta a dormir'},
+      {v:'golinho', label:'Mama só um pouquinho pra dormir de novo'},
+      {v:'so_colo', label:'Só quer colo'},
     ]},
     {id:'p6', type:'multi', text:'Sua maior dor hoje é:', hint:'Pode marcar mais de uma', options:[
-      {v:'nao_sei_suficiente', ic:'❓', label:'Não sei se ele mama o suficiente'},
-      {v:'producao', ic:'🥛', label:'Minha produção de leite'},
-      {v:'acorda_noite', ic:'😪', label:'Ele acorda demais de noite'},
-      {v:'so_dorme_peito', ic:'🤱', label:'Ele só dorme no peito ou no colo'},
-      {v:'organizar', ic:'🗓️', label:'Quero organizar a rotina dele'},
+      {v:'nao_sei_suficiente', label:'Não sei se ele mama o suficiente'},
+      {v:'producao', label:'Minha produção de leite'},
+      {v:'acorda_noite', label:'Ele acorda demais de noite'},
+      {v:'so_dorme_peito', label:'Ele só dorme no peito ou no colo'},
+      {v:'organizar', label:'Quero organizar a rotina dele'},
     ]},
     {id:'p7', type:'single', text:'Como está o ganho de peso do bebê?', options:[
-      {v:'bem', ic:'⚖️', label:'Ganhando bem, dentro do esperado'},
-      {v:'super_bem', ic:'📈', label:'Ganhando super bem, até acima da curva'},
-      {v:'pouco_abaixo', ic:'📉', label:'Um pouco abaixo da curva'},
-      {v:'bem_abaixo', ic:'⚠️', label:'Bem abaixo do esperado'},
+      {v:'bem', label:'Ganhando bem, dentro do esperado'},
+      {v:'super_bem', label:'Ganhando super bem, até acima da curva'},
+      {v:'pouco_abaixo', label:'Um pouco abaixo da curva'},
+      {v:'bem_abaixo', label:'Bem abaixo do esperado'},
     ]},
     {id:'p8', type:'single', text:'Você usa bico de silicone?', options:[
-      {v:'sim', ic:'🛡️', label:'Sim'},
-      {v:'nao', ic:'🙂', label:'Não'},
+      {v:'sim', label:'Sim'},
+      {v:'nao', label:'Não'},
     ]},
     {id:'p8b', type:'single', showIf:a=>a.p8==='sim', text:'Você gostaria de parar de usar?', options:[
-      {v:'sim', ic:'💚', label:'Sim'},
-      {v:'nao', ic:'🤍', label:'Não, está tranquilo assim'},
+      {v:'sim', label:'Sim'},
+      {v:'nao', label:'Não, está tranquilo assim'},
     ]},
   ],
 
   /* -------- FLUXO 4 : 6 a 12 meses -------- */
   m6a12:[
     {id:'p2', type:'single', text:'Como está a amamentação hoje?', options:[
-      {v:'so_peito', ic:'🤱', label:'Só peito'},
-      {v:'peito_formula', ic:'🍼', label:'Peito + fórmula'},
-      {v:'so_formula', ic:'🍼', label:'Só fórmula'},
+      {v:'so_peito', label:'Só peito'},
+      {v:'peito_formula', label:'Peito + fórmula'},
+      {v:'so_formula', label:'Só fórmula'},
     ]},
     {id:'p3', type:'single', text:'Como está a introdução alimentar?', options:[
-      {v:'bem', ic:'🍽️', label:'Indo bem, come de tudo'},
-      {v:'aceita_pouco', ic:'🥄', label:'Aceita uns alimentos, mas come pouco'},
-      {v:'recusa', ic:'🙅', label:'Recusa bastante'},
-      {v:'nao_comecei', ic:'🕐', label:'Ainda não comecei'},
+      {v:'bem', label:'Indo bem, come de tudo'},
+      {v:'aceita_pouco', label:'Aceita uns alimentos, mas come pouco'},
+      {v:'recusa', label:'Recusa bastante'},
+      {v:'nao_comecei', label:'Ainda não comecei'},
     ]},
     {id:'p4', type:'single', text:'Ele acorda muito de madrugada?', options:[
-      {v:'nao', ic:'🌙', label:'Não'},
-      {v:'algumas', ic:'😪', label:'Sim, algumas vezes'},
-      {v:'cada_2h', ic:'😵', label:'Sim, de 2 em 2h ou menos'},
+      {v:'nao', label:'Não'},
+      {v:'algumas', label:'Sim, algumas vezes'},
+      {v:'cada_2h', label:'Sim, de 2 em 2h ou menos'},
     ]},
     {id:'p5', type:'multi', text:'Quando ele acorda à noite, ele:', hint:'Pode marcar mais de uma', options:[
-      {v:'mama_bem_volta', ic:'🍼', label:'Mama bem e volta a dormir'},
-      {v:'golinhos', ic:'💤', label:'Mama só uns golinhos e volta a dormir'},
-      {v:'so_colo', ic:'🤗', label:'Só quer colo'},
+      {v:'mama_bem_volta', label:'Mama bem e volta a dormir'},
+      {v:'golinhos', label:'Mama só uns golinhos e volta a dormir'},
+      {v:'so_colo', label:'Só quer colo'},
     ]},
     {id:'p6', type:'multi', text:'Sua maior dificuldade hoje é:', hint:'Pode marcar mais de uma', options:[
-      {v:'inseguranca_amamentacao', ic:'🤍', label:'Ainda estou insegura com a amamentação'},
-      {v:'acorda_demais', ic:'😪', label:'Ele acorda demais à noite'},
-      {v:'so_dorme_mamando', ic:'🤱', label:'Ele só dorme mamando ou no colo'},
-      {v:'organizar', ic:'🗓️', label:'Quero organizar a rotina'},
+      {v:'inseguranca_amamentacao', label:'Ainda estou insegura com a amamentação'},
+      {v:'acorda_demais', label:'Ele acorda demais à noite'},
+      {v:'so_dorme_mamando', label:'Ele só dorme mamando ou no colo'},
+      {v:'organizar', label:'Quero organizar a rotina'},
     ]},
     {id:'p7', type:'single', text:'Como está o ganho de peso do bebê?', options:[
-      {v:'bem', ic:'⚖️', label:'Ganhando bem, dentro do esperado'},
-      {v:'super_bem', ic:'📈', label:'Ganhando super bem, até acima da curva'},
-      {v:'pouco_abaixo', ic:'📉', label:'Um pouco abaixo da curva'},
-      {v:'bem_abaixo', ic:'⚠️', label:'Bem abaixo do esperado'},
+      {v:'bem', label:'Ganhando bem, dentro do esperado'},
+      {v:'super_bem', label:'Ganhando super bem, até acima da curva'},
+      {v:'pouco_abaixo', label:'Um pouco abaixo da curva'},
+      {v:'bem_abaixo', label:'Bem abaixo do esperado'},
     ]},
     {id:'p8', type:'single', text:'Quantas vezes por dia o bebê mama? (peito ou fórmula)', options:[
-      {v:'varias', ic:'🔁', label:'Várias vezes ao dia'},
-      {v:'uma_duas', ic:'✌️', label:'Só uma ou duas vezes'},
-      {v:'nao_oferece_dia', ic:'🍽️', label:'Não ofereço de dia, come as refeições no lugar'},
+      {v:'varias', label:'Várias vezes ao dia'},
+      {v:'uma_duas', label:'Só uma ou duas vezes'},
+      {v:'nao_oferece_dia', label:'Não ofereço de dia, come as refeições no lugar'},
     ]},
   ],
 
   /* -------- FLUXO 1 : gestante -------- */
   gestante:[
     {id:'p2', type:'single', text:'Você já amamentou antes?', options:[
-      {v:'sim_tranquilo', ic:'💚', label:'Sim, e foi tranquilo'},
-      {v:'sim_sofri', ic:'😥', label:'Sim, mas sofri pra conseguir'},
-      {v:'primeiro', ic:'🤰', label:'Não, é meu primeiro bebê'},
+      {v:'sim_tranquilo', label:'Sim, e foi tranquilo'},
+      {v:'sim_sofri', label:'Sim, mas sofri pra conseguir'},
+      {v:'primeiro', label:'Não, é meu primeiro bebê'},
     ]},
     {id:'p3', type:'multi', text:'Quando você pensa em amamentar, qual pensamento mais aparece?', hint:'Pode marcar até 3', max:3, options:[
-      {v:'sem_leite', ic:'🥛', label:'E se eu não tiver leite suficiente?'},
-      {v:'doi_muito', ic:'😖', label:'Ouvi dizer que dói muito'},
-      {v:'nao_sei_mamando', ic:'❓', label:'Não vou saber se ele está mamando direito'},
-      {v:'perdida', ic:'🌀', label:'Cada um me fala uma coisa, estou perdida'},
-      {v:'medo_formula', ic:'🍼', label:'Medo de não conseguir e ter que dar fórmula'},
-      {v:'peito_certo', ic:'🤍', label:'Medo do meu peito não ser "certo" pra amamentar'},
-      {v:'por_onde_comecar', ic:'🧭', label:'Quero, mas não sei nem por onde começar'},
+      {v:'sem_leite', label:'E se eu não tiver leite suficiente?'},
+      {v:'doi_muito', label:'Ouvi dizer que dói muito'},
+      {v:'nao_sei_mamando', label:'Não vou saber se ele está mamando direito'},
+      {v:'perdida', label:'Cada um me fala uma coisa, estou perdida'},
+      {v:'medo_formula', label:'Medo de não conseguir e ter que dar fórmula'},
+      {v:'peito_certo', label:'Medo do meu peito não ser "certo" pra amamentar'},
+      {v:'por_onde_comecar', label:'Quero, mas não sei nem por onde começar'},
     ]},
     {id:'p4', type:'multi', text:'O que você mais quer aprender antes do bebê chegar?', hint:'Pode marcar mais de uma', options:[
-      {v:'pega_nao_doer', ic:'🎯', label:'Como fazer a pega certa pra não doer'},
-      {v:'garantir_leite', ic:'🥛', label:'Como garantir que vou ter leite'},
-      {v:'saber_suficiente', ic:'📏', label:'Como saber se ele está mamando o suficiente'},
-      {v:'cuidar_rn', ic:'👶', label:'Como cuidar do recém-nascido sem entrar em pânico'},
+      {v:'pega_nao_doer', label:'Como fazer a pega certa pra não doer'},
+      {v:'garantir_leite', label:'Como garantir que vou ter leite'},
+      {v:'saber_suficiente', label:'Como saber se ele está mamando o suficiente'},
+      {v:'cuidar_rn', label:'Como cuidar do recém-nascido sem entrar em pânico'},
     ]},
   ],
 };
@@ -436,11 +456,23 @@ function roteia(flow, a){
 
 /* ============================ ENGINE ==================================== */
 let state = { flow:null, answers:{}, order:[], pos:0 };
+const $ = id => document.getElementById(id);
+
+function renderWelcome(){
+  state = { flow:null, answers:{}, order:['__idade__'], pos:0 };
+  $('prog-fill').style.width='0%';
+  $('btn-back').style.display='none';
+  $('content').innerHTML = `
+    <div class="screen welcome">
+      <h1 class="title">Será que meu bebê<br>está mamando bem?</h1>
+      <p class="lead">Responda algumas perguntas rápidas e descubra o que os sinais do seu bebê estão te contando, e o que fazer a respeito.</p>
+      <img class="hero-img" src="assets/hero.webp" alt="Bebê mamando no peito">
+      <button class="btn btn-verde" onclick="startQuiz()">Começar o quiz</button>
+    </div>`;
+}
 
 function startQuiz(){
   state = { flow:null, answers:{}, order:['__idade__'], pos:0 };
-  document.getElementById('welcome').style.display='none';
-  document.getElementById('quiz').style.display='block';
   render();
 }
 
@@ -458,83 +490,77 @@ function currentQ(){
 }
 
 function progressInfo(){
-  if(state.order[state.pos]==='__idade__') return {pct:6, txt:'1 de ?'};
+  if(state.order[state.pos]==='__idade__') return {pct:5, label:'Pra começar'};
   const vis = visibleQuestions();
-  const total = vis.length + 1;
+  const total = vis.length + 1;      // +1 = idade
   const step = state.pos + 1;
-  return {pct: Math.round((state.pos/total)*100)+6, txt:`${step} de ${total}`};
+  const label = step>=total ? 'Última pergunta' : `Pergunta ${step} de ${total}`;
+  return {pct: Math.round((step-1)/total*100)+5, label};
 }
 
 function render(){
   const q = currentQ();
   if(!q){ finish(); return; }
   const p = progressInfo();
-  const el = document.getElementById('quiz');
-  let opts='';
+  $('prog-fill').style.width = p.pct + '%';
+  $('btn-back').style.display = 'flex';
 
+  let opts='';
   if(q.type==='single'){
     const cur = state.answers[q.id];
     opts = `<div class="options">` + q.options.map(o=>`
-      <div class="opt ${cur===o.v?'sel':''}" onclick="pickSingle('${q.id}','${o.v}')">
-        <div class="ic">${o.ic||'•'}</div>${o.label}<div class="chk"></div>
-      </div>`).join('') + `</div>`;
+      <button class="opt ${cur===o.v?'sel':''}" onclick="pickSingle('${q.id}','${o.v}',this)">
+        <span class="radio"><span class="dot"></span></span><span class="otext">${o.label}</span>
+      </button>`).join('') + `</div>`;
   }
   else if(q.type==='multi'){
     const cur = state.answers[q.id]||[];
     opts = `<div class="options">` + q.options.map(o=>`
-      <div class="opt ${cur.includes(o.v)?'sel':''}" onclick="toggleMulti('${q.id}','${o.v}',${q.max||0})">
-        <div class="ic">${o.ic||'•'}</div>${o.label}<div class="chk"></div>
-      </div>`).join('') + `</div>
-      <div class="btn-row"><button id="contBtn" class="btn btn-verde" onclick="goNext()">Continuar</button></div>`;
+      <button class="opt ${cur.includes(o.v)?'sel':''}" onclick="toggleMulti('${q.id}','${o.v}',${q.max||0},this)">
+        <span class="radio sq"><span class="dot"></span></span><span class="otext">${o.label}</span>
+      </button>`).join('') + `</div>
+      <button id="contBtn" class="btn btn-verde btn-cont" onclick="goNext()" ${cur.length?'':'disabled'}>Continuar</button>`;
   }
   else if(q.type==='foto'){
     const cur = state.answers[q.id];
     opts = `<div class="foto-ref">🖼️ ${q.foto}</div>
       <div class="foto-row">
-        <div class="opt ${cur==='sim'?'sel':''}" onclick="pickSingle('${q.id}','sim')"><div class="ic">👀</div>Sim<div class="chk"></div></div>
-        <div class="opt ${cur==='nao'?'sel':''}" onclick="pickSingle('${q.id}','nao')"><div class="ic">🙂</div>Não<div class="chk"></div></div>
+        <button class="opt ${cur==='sim'?'sel':''}" onclick="pickSingle('${q.id}','sim',this)"><span class="radio"><span class="dot"></span></span><span class="otext">Sim</span></button>
+        <button class="opt ${cur==='nao'?'sel':''}" onclick="pickSingle('${q.id}','nao',this)"><span class="radio"><span class="dot"></span></span><span class="otext">Não</span></button>
       </div>`;
   }
 
-  el.innerHTML = `
+  $('content').innerHTML = `
     <div class="screen">
-      <div class="progress"><div class="bar"><div class="fill" style="width:${p.pct}%"></div></div><div class="step">${p.txt}</div></div>
-      <h2 class="q">${q.text}</h2>
-      ${q.hint?`<p class="q-hint">${q.hint}</p>`:`<div style="height:6px"></div>`}
+      <p class="step-label">${p.label}</p>
+      <h2 class="q-title">${q.text}</h2>
+      ${q.hint?`<p class="q-hint">${q.hint}</p>`:`<div class="q-gap"></div>`}
       ${opts}
-      <div class="btn-row"><button class="btn btn-ghost" onclick="goBack()">← voltar</button></div>
     </div>`;
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function pickSingle(qid, v){
+function pickSingle(qid, v, el){
   state.answers[qid]=v;
-  // idade define o fluxo
   if(qid==='idade'){ state.flow=v; }
-  goNext();
+  // mostra a seleção antes de avançar (feito no padrão do perfis)
+  if(el){ el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); }
+  setTimeout(goNext, 260);
 }
 
-function toggleMulti(qid, v, max){
+function toggleMulti(qid, v, max, el){
   const arr = state.answers[qid] ? [...state.answers[qid]] : [];
   const i = arr.indexOf(v);
   if(i>=0) arr.splice(i,1);
   else { if(max && arr.length>=max) return; arr.push(v); }
   state.answers[qid]=arr;
-  // atualiza visual sem re-render completo
-  render();
+  el.classList.toggle('sel', arr.includes(v));
+  const btn = $('contBtn'); if(btn) btn.disabled = arr.length===0;
 }
 
-function goNext(){
-  state.pos++;
-  render();
-}
+function goNext(){ state.pos++; render(); }
 
 function goBack(){
-  if(state.pos===0){ // volta pra abertura
-    document.getElementById('quiz').style.display='none';
-    document.getElementById('welcome').style.display='block';
-    return;
-  }
+  if(state.pos===0){ renderWelcome(); return; }
   state.pos--;
   render();
 }
@@ -548,33 +574,27 @@ function poucoLeite(a){
 }
 function montaFaixas(a){
   const c1=[], c2=[], c3=[], c4=[];
-  // Classe 1 (extração) — ordem = peso
   if(poucoLeite(a)) c1.push('pouco_leite');
   if(any(a.p6,['doendo','rachadura','sangrando'])) c1.push('dor');
   if(has(a.p6,'empedrados')) c1.push('empedrado');
-  // Classe 2 (esforço)
   if(a.p7==='sim') c2.push('calo');
   if(a.p4==='menos4' || a.p4==='f4_5') c2.push('pouca_fralda');
-  // Classe 3 (bico)
   if(has(a.p6,'silicone')) c3.push('silicone');
   if(has(a.p6,'raynaud')) c3.push('raynaud');
   if(a.p8==='sim') c3.push('batom');
-  // Classe 4 (peso) — só acende quando o peso está abaixo (bate com os 4 exemplos da seção 4).
-  // A faixa "bom ganho + outras dificuldades" (peso_bom_dif) existe pronta, mas o gatilho
-  // exato fica pendente pra confirmar com a Day (senão apareceria em quase todo Cat 2).
   const pesoAbaixo = a.p5==='pouco_abaixo' || a.p5==='bem_abaixo';
   if(pesoAbaixo) c4.push('peso_abaixo');
 
   const classes=[c1,c2,c3,c4];
   const sel=new Set();
-  classes.forEach(c=>{ if(c.length) sel.add(c[0]); });        // base: 1 por classe
-  let rank=1;                                                  // reforço: preenche até ~4
+  classes.forEach(c=>{ if(c.length) sel.add(c[0]); });
+  let rank=1;
   while(sel.size<4){
     let added=false;
     for(const c of classes){ if(sel.size>=4) break; if(c[rank]){ sel.add(c[rank]); added=true; } }
     if(!added) break; rank++;
   }
-  const ordem=[];                                             // exibição na ordem das classes
+  const ordem=[];
   classes.forEach(c=>c.forEach(f=>{ if(sel.has(f)) ordem.push(f); }));
   return ordem;
 }
@@ -596,26 +616,44 @@ function finish(){
   renderEnd(bucket); // demais desfechos: hand-off por enquanto
 }
 
+const LOADING_MSGS = [
+  'Analisando cada sinal que você marcou...',
+  'Comparando com o que a Day já viu em milhares de mães...',
+  'Montando o seu resultado...'
+];
 function showLoading(url){
-  const el = document.getElementById('quiz');
-  el.innerHTML = `
+  $('prog-fill').style.width='100%';
+  $('btn-back').style.display='none';
+  $('content').innerHTML = `
     <div class="screen loading">
-      <div class="spinner"><div class="pulse"></div><div class="heart">🤍</div></div>
-      <div class="msg" id="loadMsg">Analisando as respostas de vocês</div>
-      <div class="sub">montando o seu resultado…</div>
+      <div class="lua"><div class="pulse"></div><div class="h">🤍</div></div>
+      <h2 class="lt">Analisando as suas respostas</h2>
+      <p class="lm" id="loadMsg">${LOADING_MSGS[0]}</p>
+      <div class="load-bar"><span id="loadFill"></span></div>
+      <p class="load-tag">✨ Quase lá</p>
     </div>`;
-  const msgs=['Analisando as respostas de vocês','Olhando cada sinal que você marcou','Montando o seu resultado'];
-  let i=0; const t=setInterval(()=>{ i=(i+1)%msgs.length; const m=document.getElementById('loadMsg'); if(m) m.textContent=msgs[i]; },1100);
-  setTimeout(()=>{ clearInterval(t); window.location.href=url; }, 3300);
+  const fill = $('loadFill'), msg = $('loadMsg');
+  const passos = [
+    {t:200,pct:25,m:LOADING_MSGS[0]},
+    {t:1300,pct:55,m:LOADING_MSGS[1]},
+    {t:2600,pct:85,m:LOADING_MSGS[2]},
+    {t:3400,pct:100,m:LOADING_MSGS[2]},
+  ];
+  passos.forEach(p=>setTimeout(()=>{
+    if(fill) fill.style.width=p.pct+'%';
+    if(msg && msg.textContent!==p.m){ msg.style.opacity=0; setTimeout(()=>{ msg.textContent=p.m; msg.style.opacity=1; },200); }
+  }, p.t));
+  setTimeout(()=>{ window.location.href=url; }, 3900);
 }
 
 function renderEnd(bucket){
   const d = DESFECHOS[bucket] || {emoji:'💚', titulo:'Prontinho!', caminho:'—', oferta:'—'};
-  const el = document.getElementById('quiz');
-  el.innerHTML = `
-    <div class="screen">
-      <div class="end-emoji">${d.emoji}</div>
-      <h1 class="title" style="font-size:24px">${d.titulo}</h1>
+  $('prog-fill').style.width='100%';
+  $('btn-back').style.display='none';
+  $('content').innerHTML = `
+    <div class="screen end">
+      <div class="emoji">${d.emoji}</div>
+      <h1 class="title">${d.titulo}</h1>
       <p class="lead">Terminamos! Com base nas suas respostas, esse é o caminho que faz mais sentido pra vocês agora.</p>
       <div class="caminho">
         <div class="lbl">Caminho recomendado</div>
@@ -623,18 +661,18 @@ function renderEnd(bucket){
       </div>
       <p class="devnote">A página de resposta desse desfecho entra em seguida (mesmo modelo modular).
         <br><span class="devbucket">desfecho: ${bucket}</span></p>
-      <div class="btn-row"><button class="btn btn-ghost" onclick="startQuiz()">↻ refazer o quiz</button></div>
+      <button class="btn-ghost" onclick="renderWelcome()">↻ refazer o quiz</button>
     </div>`;
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* corações decorativos */
 const hearts=[['h1','#F7B7C6'],['h2','#BFE1EC'],['h3','#F5A38C'],['h4','#F7B7C6'],['h5','#BFE1EC'],['h6','#F5A38C']];
-document.getElementById('deco').innerHTML = hearts.map(([c,col])=>
+$('deco').innerHTML = hearts.map(([c,col])=>
   `<div class="heart ${c}"><svg viewBox="0 0 32 29" width="100%"><path fill="${col}" d="M16 29S2 20 2 10.5C2 5 6 2 9.5 2 13 2 16 5 16 5s3-3 6.5-3C26 2 30 5 30 10.5 30 20 16 29 16 29z"/></svg></div>`
 ).join('');
 
-/* a idade é a primeira pergunta: injeta ela no engine trocando currentQ */
+/* Init */
+renderWelcome();
 </script>
 </body>
 </html>
