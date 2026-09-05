@@ -45,6 +45,15 @@ Demais desfechos (Cat 1/sono, Entre Sonecas, fluxos 1/3/4) ainda caem num **cart
 - Respostas em `state.answers` (single=valor, multi=array, foto='sim'/'nao').
 - `roteia(flow, answers)` → bucket de desfecho. `finish()` decide loading+redirect (Fluxo 2 Cat2/3) ou `renderEnd()` (resto).
 
+### Apresentação — padrão do quiz de perfis (repaginado 05/Set/2026)
+Reescrita a camada visual/UX de `index.html` pra bater com `perfis.manualdorecemnascido.com.br` (mantendo a identidade rosa+verde, NÃO a dark do sono). Toda a lógica ficou intacta.
+- **Card único fixo tipo "app"** (`#wrapper` max-440, min-height 592): barra de progresso colada no topo (`#prog-track/#prog-fill`), header com botão voltar circular, screens renderizadas em `#content` (progresso e voltar vivem FORA do re-render).
+- **Opções com bolinha de rádio à esquerda** (tirei as caixinhas de emoji): única = radio redondo (`.radio`), múltipla = quadradinho (`.radio.sq`) + botão "Continuar" (desabilitado até marcar 1); foto = 2 botões Sim/Não. Estado `.opt.sel` em rosa.
+- **step-label "PERGUNTA X DE Y"**, título serifado centralizado (`text-wrap:balance`), **auto-avanço** (`pickSingle` mostra a seleção 260ms antes de `goNext`).
+- **Loading** (`showLoading`) = barra animada + mensagens rodando → redirect (~3.9s).
+- Corações de fundo bem sutis (opacity .5, só 2 no mobile).
+- **Revisão Gemini (diretor de arte, OBRIGATÓRIA antes de publicar):** 7.8 → ajustes (corações sutis, tirar ✨ do label, `text-wrap:balance`) → **9.5/10**. Memória [[feedback_gemini_diretor_arte]].
+
 ### Roteamento — Fluxo 2 (rn, carro-chefe)
 `categoriaRN()`: peito+fórmula 5-8/8-10 → **cat3**; só fórmula + quer voltar → **cat3**; só fórmula + não quer → **cat1** (sono); só peito → `bebeBemRN()` ? **cat1** : **cat2**.
 Buckets: `rn_cat2_guia`, `rn_cat2_silicone` (Guia+Pesque Baby), `rn_cat3_acomp` (Guia+Acompanhamento), `rn_cat1_sono`, `rn_cat1_dormebem` (Entre Sonecas), `rn_formula_sono`.
@@ -81,6 +90,7 @@ curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_MAN
   -H "Authorization: Bearer $CLOUDFLARE_CACHE_TOKEN_MANUALDO" -H "Content-Type: application/json" --data '{"purge_everything":true}'
 ```
 - ⚠️ **Build do Pages é LENTO nesse repo** (~7-10 min preso em "building" na fila). Destrava com um **commit vazio de nudge** (`git commit --allow-empty -m "nudge"; git push`) + `POST /repos/.../pages/builds`.
+- ⚠️ **Sessão nova (meses depois): o remote do git fica com token ANTIGO embutido** → push dá `Invalid username or token`. Fix: `git remote set-url origin "https://brunotropolis:$GITHUB_PAT@github.com/brunotropolis/quiz-amamentacao.git"`.
 - Validar publicação batendo no **origin do GitHub over HTTP** (bypassa Cloudflare/TLS): `curl --resolve quizama.manualdorecemnascido.com.br:80:185.199.108.153 http://quizama.manualdorecemnascido.com.br/...`.
 - Sempre **purgar o cache** do Cloudflare depois, senão o domínio serve a versão antiga.
 
@@ -89,6 +99,9 @@ curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_MAN
 preview_start "quiz-amamentacao"   →   http://localhost:3355
 ```
 ⚠️ Nessa máquina o alias `python` é o fake do WindowsApps (abre a Store). O preview usa **`node server.js`** (`C:/Program Files/nodejs/node.exe`), configurado em `D:\CLAUDE\.claude\launch.json`. `screenshot` do preview às vezes trava — o `snapshot`/`eval` continuam funcionando; reiniciar o server destrava.
+
+### Revisão visual (Gemini) sem python
+Chrome headless (`chrome.exe --headless=new --screenshot --window-size=W,H`) + Gemini via REST (`generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$GEMINI_API_KEY`, imagem em `inline_data.data` base64, monta o body com node e `curl --data @arquivo.json`). ⚠️ **O headless diagrama o MOBILE numa largura maior que a captura** (o card "estoura") — capturar dentro de um **iframe fixo `width:390px`** num wrapper e screenshotar isso; o **Browser pane** (resize preset mobile 375) é a verdade pro mobile.
 
 ## Pendências
 ```
