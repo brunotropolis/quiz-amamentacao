@@ -22,54 +22,63 @@
 
   /* corações fixos de fundo */
   .bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-  .heart{position:absolute;opacity:.5;animation:float 8s ease-in-out infinite}
+  .heart{position:absolute;opacity:.45;animation:float 8s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-20px) rotate(4deg)}}
-  .h1{top:8%;left:4%;width:46px;animation-delay:.2s}
-  .h2{top:32%;right:5%;width:36px;animation-delay:1.4s}
-  .h3{top:64%;left:5%;width:32px;animation-delay:.8s}
-  .h4{top:86%;right:6%;width:42px;animation-delay:2s}
+  .h1{top:8%;left:4%;width:42px;animation-delay:.2s}
+  .h2{top:34%;right:5%;width:32px;animation-delay:1.4s}
+  .h3{top:64%;left:5%;width:30px;animation-delay:.8s}
+  .h4{top:86%;right:6%;width:38px;animation-delay:2s}
 
-  /* seções full-width */
-  .s{position:relative;z-index:1;width:100%;padding:66px 20px;overflow:hidden}
+  /* seções full-width (landing) */
+  .s{position:relative;z-index:1;width:100%;padding:60px 20px;overflow:hidden}
   .s .wrap{max-width:600px;margin:0 auto;position:relative;z-index:2}
   .sec-blush{background:linear-gradient(180deg,#FCEEF1,var(--blush-claro))}
   .sec-white{background:#FFF8FA}
-  .sec-lav{background:linear-gradient(180deg,#F7EFFa,var(--lavanda-claro))}
+  .sec-lav{background:linear-gradient(180deg,#F7EFFA,var(--lavanda-claro))}
   .sec-azul{background:linear-gradient(180deg,#F0F8FB,var(--azul-claro))}
   .sec-coral{background:linear-gradient(180deg,#FFF3EE,var(--coral-claro))}
   .sec-verde{background:linear-gradient(165deg,var(--verde),#40614c);color:#fff}
 
-  .eyebrow{font-family:'Dancing Script',cursive;font-size:26px;color:var(--rosa-link);text-align:center;margin-bottom:4px}
+  .eyebrow{font-family:'Dancing Script',cursive;font-size:25px;color:var(--rosa-link);text-align:center;margin-bottom:4px}
   .sec-verde .eyebrow{color:#ffdfe8}
   h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;line-height:1.18}
-  .s h2{font-size:27px;text-align:center;margin-bottom:8px}
-  .s h2 + .sub{text-align:center;color:var(--cinza);font-size:15px;margin-bottom:26px}
-  .under{width:54px;height:3px;border-radius:3px;background:var(--rosa);margin:12px auto 22px}
+  .s h2{font-size:26px;text-align:center;margin-bottom:8px;text-wrap:balance}
+  .under{width:52px;height:3px;border-radius:3px;background:var(--rosa);margin:12px auto 22px}
   .sec-verde .under{background:var(--rosa-claro)}
   p{font-size:16px;line-height:1.64;color:#5b5656}
   .sec-verde p{color:rgba(255,255,255,.92)}
-  .lead-p{font-size:17px}
+  .lead-p{font-size:16.5px}
 
   /* HERO */
-  .hero{padding-top:52px;text-align:center;background:radial-gradient(120% 80% at 50% 0,#FDEFF2,#F7D3DC)}
-  .hero h1{font-size:33px;margin:6px 12px 14px}
-  .hero .abre{font-size:17px;color:#6b6565;line-height:1.6;margin:0 6px 24px}
-  .hero-foto{width:240px;height:240px;object-fit:cover;margin:0 auto 8px;border-radius:60% 40% 46% 54%/54% 48% 52% 46%;border:6px solid #fff;box-shadow:var(--sombra)}
-  .scroll-hint{margin-top:26px;font-size:13px;color:var(--rosa-link);font-weight:700;letter-spacing:1px}
+  .hero{padding-top:50px;text-align:center;background:radial-gradient(120% 80% at 50% 0,#FDEFF2,#F7D3DC)}
+  .hero h1{font-size:31px;margin:6px 8px 18px;text-wrap:balance}
+  .hero .abre{font-size:16.5px;color:#6b6565;line-height:1.6;margin:20px auto 0;max-width:440px}
+  .hero-media{position:relative;width:100%;max-width:430px;margin:0 auto;aspect-ratio:16/10;border-radius:22px;overflow:hidden;
+    background:linear-gradient(150deg,var(--azul),#FBE9EC 55%,var(--rosa-claro));box-shadow:var(--sombra);
+    display:flex;align-items:center;justify-content:center;border:5px solid #fff}
+  .hero-media .play{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra-sm)}
+  .hero-media .play::after{content:'';border-style:solid;border-width:11px 0 11px 19px;border-color:transparent transparent transparent var(--verde);margin-left:5px}
+  .hero-media .tag{position:absolute;bottom:9px;left:0;right:0;text-align:center;font-size:11.5px;color:#8a5b68;font-weight:700}
+  .scroll-hint{margin-top:24px;font-size:13px;color:var(--rosa-link);font-weight:700;letter-spacing:1px}
   .scroll-hint .arrow{display:block;font-size:22px;margin-top:2px;animation:bounce 1.6s infinite}
   @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* CENAS (reconhecimento ✕ — modular) */
+  .cenas{display:flex;flex-direction:column;gap:11px;margin-top:6px}
+  .cena{background:#fff;border-radius:16px;padding:14px 17px;box-shadow:var(--sombra-sm);display:flex;gap:13px;align-items:center;text-align:left;font-weight:600;color:#5b5656;font-size:15.5px}
+  .cena .x{width:26px;height:26px;min-width:26px;border-radius:50%;background:#FCE0E7;color:var(--rosa-link);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
 
   /* FAIXAS */
   .faixa-img{height:150px;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:8px;
     font-weight:700;font-size:13px;color:#9a6b78;text-align:center;padding:0 20px;margin-bottom:20px;box-shadow:var(--sombra-sm)}
-  .faixa-t{font-size:23px;text-align:center;margin-bottom:6px}
+  .faixa-t{font-size:23px;text-align:center;margin-bottom:6px;text-wrap:balance}
   .faixa .under{margin-top:10px;margin-bottom:20px}
   .faixa p{margin-bottom:12px}
   .faixa p:last-child{margin-bottom:0}
 
-  /* passos / cards */
-  .cards{display:flex;flex-direction:column;gap:14px;margin-top:8px}
-  .mini{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:var(--sombra-sm);display:flex;gap:14px;align-items:flex-start;text-align:left}
+  /* cards (passos/método) */
+  .cards{display:flex;flex-direction:column;gap:13px;margin-top:8px}
+  .mini{background:#fff;border-radius:18px;padding:17px 20px;box-shadow:var(--sombra-sm);display:flex;gap:14px;align-items:flex-start;text-align:left}
   .mini .ic{width:44px;height:44px;border-radius:12px;background:var(--blush-claro);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
   .mini h4{font-family:'Nunito';font-weight:800;font-size:16px;margin-bottom:3px}
   .mini p{font-size:14.5px;margin:0}
@@ -77,26 +86,37 @@
   /* autoridade */
   .auth{display:flex;flex-direction:column;align-items:center;text-align:center}
   .auth-foto{width:150px;height:150px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:var(--sombra-sm);margin-bottom:16px;
-    background:linear-gradient(150deg,var(--azul),var(--rosa-claro));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    background:linear-gradient(150deg,var(--azul),var(--rosa-claro));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;text-align:center}
   .stats{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
   .stat{background:#fff;border-radius:16px;padding:14px 18px;box-shadow:var(--sombra-sm);min-width:96px}
   .stat .n{font-family:'Playfair Display',serif;font-size:24px;color:var(--rosa-link);font-weight:700}
   .stat .l{font-size:12px;color:var(--cinza);margin-top:2px}
 
   /* checklist */
-  .checks{display:flex;flex-direction:column;gap:12px;text-align:left;margin-top:6px}
+  .checks{display:flex;flex-direction:column;gap:11px;text-align:left;margin-top:6px}
   .check{background:#fff;border-radius:16px;padding:15px 18px;box-shadow:var(--sombra-sm);display:flex;gap:12px;align-items:flex-start;font-weight:600;color:#5b5656;font-size:15.5px}
-  .check .tick{width:26px;height:26px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:14px}
+  .check .tick{width:26px;height:26px;min-width:26px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:14px}
+
+  /* bônus */
+  .bonus{display:flex;flex-direction:column;gap:13px;margin-top:8px}
+  .bonus-card{background:#fff;border-radius:18px;padding:17px 20px;box-shadow:var(--sombra-sm);display:flex;gap:14px;align-items:flex-start;text-align:left}
+  .bonus-card .bic{width:46px;height:46px;min-width:46px;border-radius:12px;background:var(--blush-claro);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .bonus-card .tg{font-size:11px;font-weight:800;color:var(--rosa-link);text-transform:uppercase;letter-spacing:.08em}
+  .bonus-card h4{font-family:'Nunito';font-weight:800;font-size:16px;margin:2px 0 3px}
+  .bonus-card p{font-size:14px;margin:0}
 
   /* virada / junção */
   .virada p{font-size:18px;line-height:1.6;text-align:center;margin-bottom:12px}
-  .juncao{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;text-align:center;line-height:1.5}
+  .juncao{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;text-align:center;line-height:1.5;text-wrap:balance}
 
   /* OFERTA */
   .oferta-card{background:#fff;border-radius:26px;padding:30px 26px;box-shadow:var(--sombra);text-align:center;color:var(--grafite)}
   .oferta-card .prod{font-family:'Dancing Script',cursive;font-size:28px;color:var(--rosa-link);margin-bottom:2px}
-  .oferta-card h3{font-size:23px;margin-bottom:14px}
-  .oferta-card p{font-size:15px;margin-bottom:8px}
+  .oferta-card h3{font-size:22px;margin-bottom:14px}
+  .oferta-card p{font-size:15px;margin-bottom:8px;color:#5b5656}
+  .incluso{text-align:left;max-width:360px;margin:16px auto 4px;display:flex;flex-direction:column;gap:9px}
+  .incluso .it{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:#4a4545;font-weight:600}
+  .incluso .it .c{color:var(--verde);font-weight:800;flex-shrink:0}
   .price-box{margin:20px 0 6px}
   .price-box .de{font-size:14px;color:var(--cinza);text-decoration:line-through}
   .price-box .por{font-family:'Playfair Display',serif;font-size:38px;color:var(--verde);font-weight:700}
@@ -122,7 +142,7 @@
   /* FAQ */
   .faq{display:flex;flex-direction:column;gap:12px;margin-top:6px}
   .qa{background:#fff;border-radius:16px;box-shadow:var(--sombra-sm);overflow:hidden}
-  .qa summary{padding:16px 20px;font-weight:800;font-size:15.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;color:#4a4545}
+  .qa summary{padding:16px 20px;font-weight:800;font-size:15.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;color:#4a4545;gap:12px}
   .qa summary::-webkit-details-marker{display:none}
   .qa summary::after{content:'+';color:var(--rosa-link);font-size:22px}
   .qa[open] summary::after{content:'–'}
@@ -130,7 +150,7 @@
 
   /* CTA final */
   .final{text-align:center}
-  .final h2{font-size:28px;color:#fff;margin-bottom:16px}
+  .final h2{font-size:27px;color:#fff;margin-bottom:16px}
 
   /* sticky CTA */
   .sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
@@ -143,7 +163,6 @@
 
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
-  .clouds{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
 </style>
 </head>
 <body>
@@ -155,10 +174,10 @@
 
 <script>
 /* =========================================================================
-   PÁGINA DE RESPOSTA — Fluxo 2 (0-30 dias) — formato PÁGINA DE VENDAS
-   Recebe a "receita" do quiz por URL e monta a página.
-   Miolo diagnóstico (abertura/faixas/virada/junção/CTA) = copy da Dayane.
-   Seções de scaffolding (autoridade, o que aprende, garantia, FAQ) = rascunho
+   PÁGINA DE RESPOSTA — Fluxo 2 (0-30 dias) — LANDING PAGE modular (padrão perfis)
+   Recebe a "receita" do quiz por URL e monta a landing em seções full-width.
+   Miolo diagnóstico (abertura/cenas/faixas/virada/junção/CTA) = copy da Dayane.
+   Scaffolding de vendas (método/autoridade/aprende/bônus/garantia/FAQ) = rascunho
    provisório, a validar/preencher com a Day.
    ========================================================================= */
 const P = new URLSearchParams(location.search);
@@ -181,6 +200,18 @@ const ABERTURAS = {
     "Sua amamentação está instável, e a fórmula já ocupou mais espaço do que você gostaria. É possível reverter.",
     "Vou te explicar o que está acontecendo e o que você precisa fazer."
   ]
+};
+/* cenas ✕ (reconhecimento) — curtas, ancoradas na voz de cliente do doc da Day */
+const CENAS = {
+  pouco_leite:'Aquela sensação de que o leite é pouco, que ele nunca enche',
+  dor:'Dói (ou já doeu, rachou, sangrou) quase toda vez que ele mama',
+  empedrado:'O peito empedra, fica cheio e dolorido',
+  calo:'Aquela bolhinha (calo) no lábio dele depois de mamar',
+  pouca_fralda:'Poucas fraldas de xixi ao longo do dia',
+  silicone:'Preso no bico de silicone, sem saber como largar',
+  raynaud:'O bico fica branquinho e ardido depois da mamada',
+  batom:'O bico sai achatado, com jeitão de ponta de batom',
+  peso_abaixo:'O peso dele mais baixo do que devia, e o medo batendo'
 };
 const VIRADAS = {
   cat2:[
@@ -248,26 +279,40 @@ const FAIXAS = {
 const TINTS = ['sec-white','sec-azul','sec-lav','sec-coral'];
 
 /* ---------- oferta por desfecho ---------- */
+const INCLUSO_BASE = [
+  'Acesso imediato ao Guia da Pega',
+  'O passo a passo da pega correta, em vídeo',
+  'Acesso vitalício, no seu ritmo'
+];
 const OFERTA = {
   guia:{
     prod:'Guia da Pega', h3:'Deixa a mamada mais fácil pro seu bebê',
     p:'Você aprende, de um jeito simples, como facilitar pro bebê pegar o peito e mamar de forma efetiva. São poucos minutos pra entender e já colocar em prática na próxima mamada.',
-    de:'', por:'R$ 67', obs:'acesso imediato e vitalício',
+    incluso:INCLUSO_BASE, por:'R$ 67', obs:'acesso imediato e vitalício',
     btn:'Quero ajudar meu bebê a mamar melhor', alt:null, sticky:'Quero o Guia da Pega · R$67'
   },
   guia_pesque:{
     prod:'Guia da Pega + Pesque Baby', h3:'Pra largar o silicone com segurança',
     p:'Você precisa de duas coisas juntas: aprender a facilitar a pega (Guia da Pega) e uma técnica certa pra o bebê aceitar o peito direto, sem o silicone no meio. Essa técnica é o Pesque Baby, que a Day criou justamente pra isso.',
-    de:'', por:'R$ 67', obs:'Guia da Pega + Pesque Baby juntos',
+    incluso:INCLUSO_BASE.concat(['A técnica Pesque Baby, pra tirar o silicone sem voltar à estaca zero']),
+    por:'R$ 67', obs:'Guia da Pega + Pesque Baby juntos',
     btn:'Quero tirar o bico de silicone', alt:null, sticky:'Quero tirar o silicone'
   },
   guia_acomp:{
     prod:'Guia da Pega + Acompanhamento', h3:'Um ajuste na pega, com apoio de perto',
     p:'Além do Guia da Pega, você pode acrescentar 30 dias de acompanhamento individual com a nossa consultora, direto no seu WhatsApp, pra te orientar e tirar todas as dúvidas na hora.',
-    de:'', por:'R$ 67 + R$ 97', obs:'Guia da Pega R$67 · Acompanhamento +R$97',
+    incluso:INCLUSO_BASE.concat(['30 dias de acompanhamento individual no seu WhatsApp']),
+    por:'R$ 67 + R$ 97', obs:'Guia da Pega R$67 · Acompanhamento +R$97',
     btn:'Guia da Pega + acompanhamento', alt:'Só o Guia da Pega', sticky:'Quero começar agora'
   }
 };
+
+/* bônus (rascunho — confirmar os bônus reais do Guia da Pega com a Day) */
+const BONUS = [
+  {ic:'✅', tg:'Bônus 01', h:'Checklist da pega perfeita', p:'Um jeito rápido de conferir, em cada mamada, se a pega está do jeito certo.'},
+  {ic:'🤱', tg:'Bônus 02', h:'Posições pra amamentar sem dor', p:'As melhores formas de encaixar o bebê e aliviar o peito.'},
+  {ic:'🩹', tg:'Bônus 03', h:'Primeiros socorros do peito', p:'O que fazer quando dói, racha, empedra ou sangra.'}
+];
 
 /* ---------- helpers ---------- */
 const paras = (arr,cls='') => arr.map(t=>`<p class="${cls}">${t}</p>`).join('');
@@ -279,19 +324,27 @@ function render(){
   const vi = VIRADAS[cat] || VIRADAS.cat2;
   let H = '';
 
-  /* HERO */
+  /* HERO — diagnóstico + foto de marcação (onde entraria o vídeo da Day) */
   H += `<section class="s hero">
     <div class="wrap">
-      <div class="eyebrow reveal">Olha só o que descobri…</div>
+      <div class="eyebrow reveal">Resultado do seu quiz</div>
       <h1 class="reveal">${HERO_H1[cat]||HERO_H1.cat2}</h1>
+      <div class="hero-media reveal"><div class="play"></div><div class="tag">🎬 aqui entra a foto/vídeo da Day</div></div>
       <p class="abre reveal">${ab[0]}</p>
-      <img class="hero-foto reveal" src="assets/hero.webp" alt="Bebê mamando no peito">
-      <div class="scroll-hint reveal">role pra ver o que cada sinal diz<span class="arrow">↓</span></div>
+      <div class="scroll-hint reveal">role pra entender cada sinal<span class="arrow">↓</span></div>
     </div>
   </section>`;
 
-  /* INTRO faixas (2º parágrafo da abertura) */
-  H += sec('sec-blush', `<h2>O que cada sinal do seu bebê está te contando</h2><div class="under"></div>
+  /* CENAS ✕ (modular — reconhecimento) */
+  const cenasList = faixas.map(id=>CENAS[id]).filter(Boolean);
+  if(cenasList.length){
+    H += sec('sec-blush', `<div class="eyebrow">você tem vivido isso?</div>
+      <h2>Alguns sinais que apareceram nas suas respostas</h2><div class="under"></div>
+      <div class="cenas">${cenasList.map(c=>`<div class="cena"><span class="x">✕</span>${c}</div>`).join('')}</div>`);
+  }
+
+  /* INTRO das faixas (2º parágrafo da abertura) */
+  H += sec('sec-white', `<h2>O que cada sinal do seu bebê está te contando</h2><div class="under"></div>
     <p class="lead-p" style="text-align:center">${ab[1]}</p>`);
 
   /* FAIXAS modulares — cada uma vira uma seção alternada */
@@ -307,7 +360,7 @@ function render(){
   /* VIRADA */
   H += sec('sec-verde virada', `<div class="eyebrow">e aqui está o ponto</div>${paras(vi)}`);
 
-  /* SOLUÇÃO / MÉTODO */
+  /* SOLUÇÃO / MÉTODO (rascunho) */
   H += sec('sec-white', `
     <p class="juncao reveal" style="margin-bottom:26px">"${JUNCAO}"</p>
     <h2>A boa notícia: é um ajuste que se aprende em minutos</h2><div class="under"></div>
@@ -318,7 +371,7 @@ function render(){
       <div class="mini"><div class="ic">💚</div><div><h4>Sem desmame, sem fórmula na marra</h4><p>O caminho pra manter o peito, resolvendo a causa e não o sintoma.</p></div></div>
     </div>`);
 
-  /* AUTORIDADE (rascunho — validar com a Day) */
+  /* AUTORIDADE (rascunho) */
   H += sec('sec-lav', `
     <div class="eyebrow">quem vai te ensinar</div>
     <div class="auth">
@@ -342,6 +395,13 @@ function render(){
       <div class="check"><div class="tick">✓</div>Como o bebê esvazia o peito de verdade e a produção responde</div>
     </div>`);
 
+  /* BÔNUS (rascunho) */
+  H += sec('sec-white', `
+    <h2>E você ainda ganha estes bônus</h2><div class="under"></div>
+    <div class="bonus">
+      ${BONUS.map(b=>`<div class="bonus-card"><div class="bic">${b.ic}</div><div><div class="tg">${b.tg}</div><h4>${b.h}</h4><p>${b.p}</p></div></div>`).join('')}
+    </div>`);
+
   /* OFERTA */
   let btns = `<a class="btn btn-rosa" href="#" data-checkout="${oferta}">${o.btn}</a>`;
   if(o.alt) btns += `<div class="ou">ou</div><a class="btn btn-out" href="#" data-checkout="guia">${o.alt}</a>`;
@@ -350,7 +410,8 @@ function render(){
       <div class="prod">${o.prod}</div>
       <h3>${o.h3}</h3>
       <p>${o.p}</p>
-      <div class="price-box">${o.de?`<div class="de">${o.de}</div>`:''}<div class="por">${o.por}</div><div class="obs">${o.obs}</div></div>
+      <div class="incluso">${(o.incluso||[]).map(it=>`<div class="it"><span class="c">✓</span>${it}</div>`).join('')}</div>
+      <div class="price-box"><div class="por">${o.por}</div><div class="obs">${o.obs}</div></div>
       ${btns}
     </div>
   </div></section>`;
@@ -386,9 +447,8 @@ function render(){
   document.getElementById('page').innerHTML = H;
   document.getElementById('stickyBtn').textContent = o.sticky;
 
-  /* checkout placeholder */
+  /* checkout placeholder (Greenn real entra depois) */
   document.querySelectorAll('[data-checkout]').forEach(a=>a.addEventListener('click',e=>{
-    if(a.getAttribute('href')==='#oferta') return;
     e.preventDefault(); alert('Checkout da Greenn entra aqui (produto: '+a.dataset.checkout+').');
   }));
 
